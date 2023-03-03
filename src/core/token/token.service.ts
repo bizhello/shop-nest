@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
-import AuthEnum from '../common/enums/auth';
-import TokenEnum from '../common/enums/token';
-import Token, { TTokenDocument } from '../schemas/token.schema';
-import { generateTokens, validateRefreshToken } from '../utils/tokens';
+import AuthEnum from '../../common/enums/auth';
+import TokenEnum from '../../common/enums/token';
+import Token, { TTokenDocument } from '../../schemas/token.schema';
+import { generateTokens, validateRefreshToken } from '../../utils/tokens';
 import { IRefresh } from './interfaces/IRefresh';
 
 @Injectable()

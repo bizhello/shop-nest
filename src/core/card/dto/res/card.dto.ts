@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import { ICardWithId } from '../../../card/interfaces/ICard';
+import { ICardWithId } from '../../interfaces/ICard';
 
 export default class ResCardDto implements ICardWithId {
   public readonly id: Types.ObjectId;

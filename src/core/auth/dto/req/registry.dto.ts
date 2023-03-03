@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
-import { IUserRegistry } from '../../../auth/interfaces/IUserRegistry';
-import { maxLength } from '../../../common/constans/maxLengthUser';
+import { IUserRegistry } from '../../interfaces/IUserRegistry';
+import { maxLength } from '../../../../common/constans/maxLengthUser';
 
 export default class ReqRegistryDto implements IUserRegistry {
   @IsNotEmpty()

@@ -2,9 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import AuthModule from './auth/auth.module';
-import CardModule from './card/card.module';
-import UserModule from './user/user.module';
+import CoreModule from './core/core.module';
 
 @Module({
   imports: [
@@ -12,9 +10,7 @@ import UserModule from './user/user.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DATABASE_MONGO),
-    UserModule,
-    CardModule,
-    AuthModule,
+    CoreModule,
   ],
   controllers: [],
   providers: [],

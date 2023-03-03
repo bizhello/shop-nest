@@ -11,8 +11,8 @@ import {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Request, Response } from 'express';
 
-import { maxAgeRefreshToken } from '../common/constans/maxLengthUser';
-import AuthEnum from '../common/enums/auth';
+import { maxAgeRefreshToken } from '../../common/constans/maxLengthUser';
+import AuthEnum from '../../common/enums/auth';
 import AuthService from './auth.service';
 import ReqLoginDto from './dto/req/login.dto';
 import ReqRegistryDto from './dto/req/registry.dto';

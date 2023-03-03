@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import IUser from '../../../auth/interfaces/IUser';
+import IUser from '../../interfaces/IUser';
 
 export default class ResRegistryDto implements IUser {
   public readonly id: Types.ObjectId;

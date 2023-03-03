@@ -1,6 +1,6 @@
 import { IsEmail, IsOptional, Length } from 'class-validator';
 
-import { maxLength } from '../../../common/constans/maxLengthUser';
+import { maxLength } from '../../../../common/constans/maxLengthUser';
 import { IChangeUser } from '../../interfaces/IChangeUser';
 
 export default class ReqChangeUserDto implements IChangeUser {

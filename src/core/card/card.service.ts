@@ -3,8 +3,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import CardEnum from '../common/enums/card';
-import { Card, TCardDocument } from '../schemas/card.schema';
+import CardEnum from '../../common/enums/card';
+import { Card, TCardDocument } from '../../schemas/card.schema';
 import { ICard, ICardWithId, IChangeCard } from './interfaces/ICard';
 
 @Injectable()

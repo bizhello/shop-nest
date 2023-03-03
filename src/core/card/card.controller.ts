@@ -10,8 +10,8 @@ import {
   Put,
 } from '@nestjs/common';
 
-import CardEnum from '../common/enums/card';
-import ValidateParamIdDto from '../dto/validate-id.dto';
+import ValidateParamIdDto from '../../common/dto/validate-id.dto';
+import CardEnum from '../../common/enums/card';
 import CardService from './card.service';
 import ReqChangeCardDto from './dto/req/change-card.dto';
 import ReqCreateCardDto from './dto/req/create-card.dto';
@@ -60,6 +60,12 @@ export default class CardController {
     try {
       return await this.cardService.changeCard(param.id, changeCardDto);
     } catch (error) {
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw new HttpException(
+          CardEnum.ERROR_MESSAGE_CARD_NOT_FOUND,
+          HttpStatus.CONFLICT,
+        );
+      }
       if (error.name === CardEnum.ERROR_NAME_MONGO_SERVER) {
         throw new HttpException(
           CardEnum.ERROR_MESSAGE_CARD_TITLE_NOT_FOUND,

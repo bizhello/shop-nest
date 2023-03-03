@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-import { ICard } from '../../../card/interfaces/ICard';
+import { ICard } from '../../interfaces/ICard';
 
 export default class ReqCreateCardDto implements ICard {
   @IsNotEmpty()

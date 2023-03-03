@@ -4,8 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import IUser from '../auth/interfaces/IUser';
-import UserEnum from '../common/enums/user';
-import { TUserDocument, User } from '../schemas/user.schema';
+import UserEnum from '../../common/enums/user';
+import { TUserDocument, User } from '../../schemas/user.schema';
 import ChangeUserDto from './dto/req/change-user.dto';
 
 @Injectable()

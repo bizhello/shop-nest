@@ -2,7 +2,7 @@ import { Controller, Get, Req, Res } from '@nestjs/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Request, Response } from 'express';
 
-import TokenEnum from '../common/enums/token';
+import TokenEnum from '../../common/enums/token';
 import ResRefreshDto from './dto/refresh.dto';
 import TokenService from './token.service';
 

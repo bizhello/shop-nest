@@ -3,10 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { compare, hash } from 'bcrypt';
 import { Model } from 'mongoose';
 
-import AuthEnum from '../common/enums/auth';
-import { TUserDocument, User } from '../schemas/user.schema';
+import AuthEnum from '../../common/enums/auth';
+import { TUserDocument, User } from '../../schemas/user.schema';
 import TokenService from '../token/token.service';
-import { generateTokens } from '../utils/tokens';
+import { generateTokens } from '../../utils/tokens';
 import IUser from './interfaces/IUser';
 import { IUserLogin } from './interfaces/IUserLogin';
 import { IUserRegistry } from './interfaces/IUserRegistry';
