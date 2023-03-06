@@ -5,6 +5,7 @@ enum CardEnum {
   ERROR_NAME_VALIDATION = 'ValidationError',
   ERROR_NAME_MONGO_SERVER = 'MongoServerError',
   PATH_BY_ID = ':id',
+  CARDS = 'cards',
 }
 
 export default CardEnum;

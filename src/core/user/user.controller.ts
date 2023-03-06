@@ -1,12 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 
 import ValidateParamIdDto from '../../common/dto/validate-id.dto';
 import UserEnum from '../../common/enums/user';
+// import UserId from '../decorators/user-id.decorator';
+import AuthGuard from '../guards/auth.guard';
 import ReqChangeUserDto from './dto/req/change-user.dto';
 import ResGetUsersDto from './dto/req/get-user.dto';
 import ResChangeUserDto from './dto/res/change-user.dto';
 import UserService from './user.service';
 
+@UseGuards(new AuthGuard())
 @Controller(UserEnum.USERS)
 export default class UserController {
   constructor(private readonly userService: UserService) {}
