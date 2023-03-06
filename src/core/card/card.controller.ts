@@ -8,16 +8,19 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 
 import ValidateParamIdDto from '../../common/dto/validate-id.dto';
 import CardEnum from '../../common/enums/card';
+import AuthGuard from '../guards/auth.guard';
 import CardService from './card.service';
 import ReqChangeCardDto from './dto/req/change-card.dto';
 import ReqCreateCardDto from './dto/req/create-card.dto';
 import ResCardDto from './dto/res/card.dto';
 
-@Controller('cards')
+@UseGuards(new AuthGuard())
+@Controller(CardEnum.CARDS)
 export default class CardController {
   constructor(private readonly cardService: CardService) {}
 
