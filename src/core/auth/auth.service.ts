@@ -3,10 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { compare, hash } from 'bcrypt';
 import { Model } from 'mongoose';
 
-import AuthEnum from '../../common/enums/auth';
+import { MessagesEnum } from '../../common/enums';
 import { TUserDocument, User } from '../../schemas/user.schema';
 import TokenService from '../token/token.service';
-import { generateTokens } from '../../utils/tokens';
 import IUser from './interfaces/IUser';
 import { IUserLogin } from './interfaces/IUserLogin';
 import { IUserRegistry } from './interfaces/IUserRegistry';
@@ -25,10 +24,7 @@ export default class AuthService {
     const candidate = await this.userModel.findOne({ email });
 
     if (candidate) {
-      throw new HttpException(
-        AuthEnum.ERROR_MESSAGE_EMAIL_IS_BUSY,
-        HttpStatus.CONFLICT,
-      );
+      throw new HttpException(MessagesEnum.EMAIL_IS_BUSY, HttpStatus.CONFLICT);
     }
 
     const hashPassword = await hash(password, +process.env.SALT_ROUNDS);
@@ -47,7 +43,7 @@ export default class AuthService {
 
     if (!candidate) {
       throw new HttpException(
-        AuthEnum.ERROR_MESSAGE_DATA_IS_NOT_CORRECT,
+        MessagesEnum.DATA_IS_NOT_CORRECT,
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -55,12 +51,12 @@ export default class AuthService {
     const match = await compare(password, candidate.password);
     if (!match) {
       throw new HttpException(
-        AuthEnum.ERROR_MESSAGE_DATA_IS_NOT_CORRECT,
+        MessagesEnum.DATA_IS_NOT_CORRECT,
         HttpStatus.UNAUTHORIZED,
       );
     }
 
-    const tokens = generateTokens(candidate.id);
+    const tokens = this.tokenService.generateTokens(candidate.id);
     await this.tokenService.saveToken(candidate.id, tokens.refreshToken);
 
     return {

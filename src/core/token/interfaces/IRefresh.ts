@@ -1,7 +1,7 @@
-import { Types } from 'mongoose';
-
-export interface IRefresh {
-  readonly userId: Types.ObjectId;
+interface IRefresh {
+  readonly userId: string;
   readonly accessToken: string;
   readonly refreshToken: string;
 }
+
+export default IRefresh;

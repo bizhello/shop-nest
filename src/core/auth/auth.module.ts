@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { User, userSchema } from '../../schemas/user.schema';
 import TokenModule from '../token/token.module';
 import AuthController from './auth.controller';

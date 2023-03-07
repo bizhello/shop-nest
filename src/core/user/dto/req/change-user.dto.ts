@@ -1,7 +1,7 @@
 import { IsEmail, IsOptional, Length } from 'class-validator';
 
-import { maxLength } from '../../../../common/constans/maxLengthUser';
-import { IChangeUser } from '../../interfaces/IChangeUser';
+import { maxLengthWord } from '../../../../common/constants';
+import IChangeUser from '../../interfaces/IChangeUser';
 
 export default class ReqChangeUserDto implements IChangeUser {
   @IsOptional()
@@ -9,10 +9,10 @@ export default class ReqChangeUserDto implements IChangeUser {
   public readonly email?: string;
 
   @IsOptional()
-  @Length(2, maxLength)
+  @Length(2, maxLengthWord)
   public readonly firstName?: string;
 
   @IsOptional()
-  @Length(2, maxLength)
+  @Length(2, maxLengthWord)
   public readonly lastName?: string;
 }

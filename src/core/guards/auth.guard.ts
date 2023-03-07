@@ -1,8 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Request } from 'express';
+import { verify } from 'jsonwebtoken';
 import { Observable } from 'rxjs';
-
-import { validateAccessToken } from '../../utils/tokens';
 
 @Injectable()
 export default class AuthGuard implements CanActivate {
@@ -20,7 +19,7 @@ export default class AuthGuard implements CanActivate {
       token = null;
     }
 
-    const userId = validateAccessToken(token);
+    const userId = verify(token, process.env.JWT_ACCESS_SECRET);
 
     return !!userId;
   }

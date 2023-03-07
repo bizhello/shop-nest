@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-console */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import UserEnum from '../../common/enums/user';
+import { ErrorsNameEnum, MessagesEnum } from '../../common/enums';
 import { TUserDocument, User } from '../../schemas/user.schema';
 import IUser from '../auth/interfaces/IUser';
 import ChangeUserDto from './dto/req/change-user.dto';
@@ -16,10 +16,10 @@ export default class UserService {
 
   public async getUsers(): Promise<IUser[]> {
     const users = await this.userModel.find();
-    const resUsers = await users.map((user) => {
-      const { _id, email, firstName, lastName } = user;
+    const resUsers = users.map((user) => {
+      const { id, email, firstName, lastName } = user;
 
-      return { id: _id, email, firstName, lastName };
+      return { id, email, firstName, lastName };
     });
 
     return resUsers;
@@ -30,32 +30,60 @@ export default class UserService {
 
     if (!user) {
       throw new HttpException(
-        UserEnum.ERROR_USER_NOT_FOUND,
+        MessagesEnum.USER_NOT_FOUND,
         HttpStatus.NOT_FOUND,
       );
     }
     await this.userModel.deleteOne({ _id: id });
 
-    return { message: UserEnum.MESSAGE_USER_DELETE };
+    return { message: MessagesEnum.USER_DELETE };
   }
 
   public async changeUser(
-    id: string,
+    userId: string,
     changeUserDto: ChangeUserDto,
   ): Promise<IUser> {
-    const user = await this.userModel.findByIdAndUpdate(id, changeUserDto, {
-      new: true,
-      runValidators: true,
-    });
+    try {
+      const user = await this.userModel.findByIdAndUpdate(
+        userId,
+        changeUserDto,
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
+
+      if (!user) {
+        throw new HttpException(
+          MessagesEnum.USER_NOT_FOUND,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const { id, email, firstName, lastName } = user;
+
+      return { id, email, firstName, lastName };
+    } catch (error) {
+      if (error.name === ErrorsNameEnum.MONGO_SERVER) {
+        throw new HttpException(
+          MessagesEnum.EMAIL_IS_BUSY,
+          HttpStatus.CONFLICT,
+        );
+      }
+    }
+  }
+
+  public async getUserById(userId: string): Promise<IUser> {
+    const user = await this.userModel.findById(userId);
 
     if (!user) {
       throw new HttpException(
-        UserEnum.ERROR_USER_NOT_FOUND,
+        MessagesEnum.USER_NOT_FOUND,
         HttpStatus.NOT_FOUND,
       );
     }
-    const { _id, email, firstName, lastName } = user;
+    const { id, email, firstName, lastName } = user;
 
-    return { id: _id, email, firstName, lastName };
+    return { id, email, firstName, lastName };
   }
 }
