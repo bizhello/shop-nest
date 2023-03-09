@@ -13,7 +13,9 @@ export default class TokenService {
     @InjectModel(Token.name) private tokenModel: Model<TTokenDocument>,
   ) {}
 
-  public async refreshToken(refreshToken: string): Promise<IRefresh> {
+  public async refreshToken(
+    refreshToken: string | undefined,
+  ): Promise<IRefresh> {
     if (!refreshToken) {
       throw new HttpException(MessagesEnum.AUTH_ERROR, HttpStatus.FORBIDDEN);
     }
