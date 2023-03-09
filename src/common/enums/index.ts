@@ -11,6 +11,8 @@ enum RoutesEnum {
   LOGOUT = 'logout',
   USERS = 'users',
   CARDS = 'cards',
+  DECREMENT = 'decrement',
+  INCREMENT = 'increment',
 }
 
 enum ErrorsNameEnum {
@@ -30,6 +32,7 @@ enum MessagesEnum {
   CARD_TITLE_NOT_FOUND = 'Название такой карточки уже существует',
   CARD_DELETE = 'Карточка удалена',
   CORS = 'Not allowed by CORS',
+  MIN_COUNT = 'Значение должно быть больше 0',
 }
 
 enum TokenTimeEnum {

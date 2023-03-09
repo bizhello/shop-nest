@@ -55,6 +55,38 @@ export default class CardController {
     return this.cardService.deleteCard(param.id);
   }
 
+  @Get(`${RoutesEnum.BY_ID}/${RoutesEnum.INCREMENT}`)
+  public async incrementCard(
+    @Param() param: ValidateParamIdDto,
+  ): Promise<{ status: string }> {
+    try {
+      return this.cardService.incrementCard(param.id);
+    } catch (error) {
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw new HttpException(
+          MessagesEnum.CARD_NOT_FOUND,
+          HttpStatus.CONFLICT,
+        );
+      }
+    }
+  }
+
+  @Get(`${RoutesEnum.BY_ID}/${RoutesEnum.DECREMENT}`)
+  public async decrementCard(
+    @Param() param: ValidateParamIdDto,
+  ): Promise<{ status: string }> {
+    try {
+      return this.cardService.decrementCard(param.id);
+    } catch (error) {
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw new HttpException(
+          MessagesEnum.CARD_NOT_FOUND,
+          HttpStatus.CONFLICT,
+        );
+      }
+    }
+  }
+
   @Put(RoutesEnum.BY_ID)
   public async changeCard(
     @Param() param: ValidateParamIdDto,

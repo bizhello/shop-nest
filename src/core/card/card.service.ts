@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { MessagesEnum } from '../../common/enums';
+import { ErrorsNameEnum, MessagesEnum } from '../../common/enums';
 import { Card, TCardDocument } from '../../schemas/card.schema';
 import { ICard, ICardWithId, IChangeCard } from './interfaces/ICard';
 
@@ -41,6 +41,40 @@ export default class CardService {
     await this.cardModel.deleteOne({ _id: id });
 
     return { message: MessagesEnum.CARD_DELETE };
+  }
+
+  public async incrementCard(id: string): Promise<{ status: string }> {
+    const card = await this.cardModel.findById(id);
+    card.count += 1;
+    await card.save();
+    if (!card) {
+      throw new HttpException(
+        MessagesEnum.CARD_NOT_FOUND,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return { status: 'Ок' };
+  }
+
+  public async decrementCard(id: string): Promise<{ status: string }> {
+    try {
+      const card = await this.cardModel.findById(id);
+      card.count -= 1;
+      await card.save();
+      if (!card) {
+        throw new HttpException(
+          MessagesEnum.CARD_NOT_FOUND,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return { status: 'Ок' };
+    } catch (error) {
+      if (error.name === ErrorsNameEnum.VALIDATION) {
+        throw new HttpException(MessagesEnum.MIN_COUNT, HttpStatus.CONFLICT);
+      }
+    }
   }
 
   public async changeCard(
