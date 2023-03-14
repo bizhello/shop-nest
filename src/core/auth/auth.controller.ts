@@ -7,6 +7,8 @@ import {
   Post,
   Req,
   Res,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Request, Response } from 'express';
@@ -24,6 +26,7 @@ export default class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post(AuthEnum.PATH_REGISTRY)
+  @UsePipes(new ValidationPipe())
   public async register(@Body() dto: ReqRegistryDto): Promise<ResRegistryDto> {
     return this.authService.registry(dto);
   }

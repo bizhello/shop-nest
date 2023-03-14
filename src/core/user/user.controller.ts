@@ -11,7 +11,7 @@ import {
 import ValidateParamIdDto from '../../common/dto/validate-id.dto';
 import UserEnum from '../../common/enums/user';
 // import UserId from '../decorators/user-id.decorator';
-import AuthGuard from '../guards/auth.guard';
+import AuthGuard from '../../guards/auth.guard';
 import ReqChangeUserDto from './dto/req/change-user.dto';
 import ResGetUsersDto from './dto/req/get-user.dto';
 import ResChangeUserDto from './dto/res/change-user.dto';

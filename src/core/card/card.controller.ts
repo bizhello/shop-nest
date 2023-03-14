@@ -13,7 +13,7 @@ import {
 
 import ValidateParamIdDto from '../../common/dto/validate-id.dto';
 import CardEnum from '../../common/enums/card';
-import AuthGuard from '../guards/auth.guard';
+import AuthGuard from '../../guards/auth.guard';
 import CardService from './card.service';
 import ReqChangeCardDto from './dto/req/change-card.dto';
 import ReqCreateCardDto from './dto/req/create-card.dto';
