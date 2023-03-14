@@ -8,7 +8,7 @@ import corsOptions from './utils/corsOptiopns';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors(corsOptions);
+  // app.enableCors(corsOptions);
   app.use(cookieParser());
   app.use(helmet());
 

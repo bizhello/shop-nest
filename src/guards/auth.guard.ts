@@ -9,7 +9,7 @@ import { Request } from 'express';
 import { verify } from 'jsonwebtoken';
 import { Observable } from 'rxjs';
 
-import { MessagesEnum } from '../../common/enums';
+import { MessagesEnum } from '../common/enums';
 
 @Injectable()
 export default class AuthGuard implements CanActivate {
