@@ -1,4 +1,3 @@
-import { maxAgeRefreshToken } from '@app/common/constants';
 import { MessagesEnum, RoutesEnum, TextEnum } from '@app/common/enums';
 import AuthService from '@app/core/auth/auth.service';
 import ReqLoginDto from '@app/core/auth/dto/req/login.dto';
@@ -43,7 +42,7 @@ export default class AuthController {
     // eslint-disable-next-line no-unused-expressions
     dto.remember &&
       response.cookie(TextEnum.REFRESH_TOKEN, refreshToken, {
-        maxAge: maxAgeRefreshToken,
+        maxAge: +process.env.MAX_AGE_REFRESH_TOKEN,
         httpOnly: true,
         secure: true,
         sameSite: 'none',
@@ -79,7 +78,7 @@ export default class AuthController {
     );
 
     response.cookie(TextEnum.REFRESH_TOKEN, userInfo.refreshToken, {
-      maxAge: maxAgeRefreshToken,
+      maxAge: +process.env.MAX_AGE_REFRESH_TOKEN,
       httpOnly: true,
       secure: true,
       sameSite: 'none',

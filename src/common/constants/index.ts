@@ -1,7 +1,5 @@
 const maxLengthWord = 30;
 
-const maxAgeRefreshToken = 30 * 24 * 60 * 1000;
-
 const allowedCors = [
   'https://bizhello.github.io',
   'https://bizhello.github.io/shop-family',
@@ -11,4 +9,4 @@ const allowedCors = [
   'https://localhost:3000',
 ];
 
-export { allowedCors, maxAgeRefreshToken, maxLengthWord };
+export { allowedCors, maxLengthWord };
