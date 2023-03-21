@@ -1,15 +1,14 @@
+import { MessagesEnum } from '@app/common/enums';
+import IUser from '@app/core/auth/interfaces/IUser';
+import { IUserLogin } from '@app/core/auth/interfaces/IUserLogin';
+import { IUserRegistry } from '@app/core/auth/interfaces/IUserRegistry';
+import { IUserWithTokens } from '@app/core/auth/interfaces/IUserWithTokens';
+import TokenService from '@app/core/token/token.service';
+import { TUserDocument, User } from '@app/schemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { compare, hash } from 'bcrypt';
 import { Model } from 'mongoose';
-
-import { MessagesEnum } from '../../common/enums';
-import { TUserDocument, User } from '../../schemas/user.schema';
-import TokenService from '../token/token.service';
-import IUser from './interfaces/IUser';
-import { IUserLogin } from './interfaces/IUserLogin';
-import { IUserRegistry } from './interfaces/IUserRegistry';
-import { IUserWithTokens } from './interfaces/IUserWithTokens';
 
 @Injectable()
 export default class AuthService {

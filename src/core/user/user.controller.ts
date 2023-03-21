@@ -1,3 +1,10 @@
+import ValidateParamIdDto from '@app/common/dto/validate-id.dto';
+import { RoutesEnum } from '@app/common/enums';
+import ReqChangeUserDto from '@app/core/user/dto/req/change-user.dto';
+import ResGetUsersDto from '@app/core/user/dto/req/get-user.dto';
+import ResChangeUserDto from '@app/core/user/dto/res/change-user.dto';
+import UserService from '@app/core/user/user.service';
+import AuthGuard from '@app/guards/auth.guard';
 import {
   Body,
   Controller,
@@ -7,14 +14,6 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-
-import ValidateParamIdDto from '../../common/dto/validate-id.dto';
-import { RoutesEnum } from '../../common/enums';
-import AuthGuard from '../guards/auth.guard';
-import ReqChangeUserDto from './dto/req/change-user.dto';
-import ResGetUsersDto from './dto/req/get-user.dto';
-import ResChangeUserDto from './dto/res/change-user.dto';
-import UserService from './user.service';
 
 @UseGuards(new AuthGuard())
 @Controller(RoutesEnum.USERS)

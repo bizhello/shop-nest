@@ -1,11 +1,10 @@
+import { MessagesEnum } from '@app/common/enums';
+import IRefresh from '@app/core/token/interfaces/IRefresh';
+import { Token, TTokenDocument } from '@app/schemas/token.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { sign, verify } from 'jsonwebtoken';
 import { Model } from 'mongoose';
-
-import { MessagesEnum, TokenTimeEnum } from '../../common/enums';
-import { Token, TTokenDocument } from '../../schemas/token.schema';
-import IRefresh from './interfaces/IRefresh';
 
 @Injectable()
 export default class TokenService {
@@ -90,8 +89,10 @@ export default class TokenService {
 
       return userId;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('НЕ ВАЛИДНЫЙ АКСЕСС ТОКЕН');
+      throw new HttpException(
+        MessagesEnum.DATA_IS_NOT_CORRECT,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 
@@ -100,11 +101,11 @@ export default class TokenService {
     refreshToken: string;
   } {
     const accessToken = sign({ userId }, process.env.JWT_ACCESS_SECRET, {
-      expiresIn: TokenTimeEnum.ACCESS,
+      expiresIn: process.env.TOKEN_TIME_ACCESS,
     });
 
-    const refreshToken = sign({ userId }, process.env.JWT_REFRESH_SECRET, {
-      expiresIn: TokenTimeEnum.REFRESH,
+    const refreshToken = sign({ userId }, process.env.TOKEN_TIME_REFRESH, {
+      expiresIn: process.env.TOKEN_TIME_REFRESH,
     });
 
     return {

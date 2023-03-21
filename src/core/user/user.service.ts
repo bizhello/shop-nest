@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
+import { ErrorsNameEnum, MessagesEnum } from '@app/common/enums';
+import IUser from '@app/core/auth/interfaces/IUser';
+import ChangeUserDto from '@app/core/user/dto/req/change-user.dto';
+import { TUserDocument, User } from '@app/schemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-
-import { ErrorsNameEnum, MessagesEnum } from '../../common/enums';
-import { TUserDocument, User } from '../../schemas/user.schema';
-import IUser from '../auth/interfaces/IUser';
-import ChangeUserDto from './dto/req/change-user.dto';
 
 @Injectable()
 export default class UserService {

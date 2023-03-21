@@ -1,7 +1,6 @@
+import { maxLengthWord } from '@app/common/constants';
+import IChangeUser from '@app/core/user/interfaces/IChangeUser';
 import { IsEmail, IsOptional, Length } from 'class-validator';
-
-import { maxLengthWord } from '../../../../common/constants';
-import IChangeUser from '../../interfaces/IChangeUser';
 
 export default class ReqChangeUserDto implements IChangeUser {
   @IsOptional()

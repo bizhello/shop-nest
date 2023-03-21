@@ -1,3 +1,4 @@
+import { ICard } from '@app/core/card/interfaces/ICard';
 import {
   IsDateString,
   IsInt,
@@ -7,19 +8,17 @@ import {
   IsString,
 } from 'class-validator';
 
-import { ICard } from '../../interfaces/ICard';
-
 export default class ReqCreateCardDto implements ICard {
   @IsNotEmpty()
   @IsString()
   public readonly title: string;
 
   @IsNotEmpty()
-  @IsDateString()
+  @IsDateString({}, { each: true })
   public readonly dateFrom: Date;
 
   @IsNotEmpty()
-  @IsDateString()
+  @IsDateString({}, { each: true })
   public readonly dateTo: Date;
 
   @IsNotEmpty()

@@ -1,7 +1,6 @@
+import { TextEnum } from '@app/common/enums';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-
-import { TextEnum } from '../common/enums';
 
 @Schema()
 export class Token {

@@ -1,6 +1,7 @@
 enum TextEnum {
   REFRESH_TOKEN = 'refreshToken',
   USER = 'User',
+  IMAGE = 'image',
 }
 
 enum RoutesEnum {
@@ -13,6 +14,7 @@ enum RoutesEnum {
   CARDS = 'cards',
   DECREMENT = 'decrement',
   INCREMENT = 'increment',
+  IMAGES = 'images',
 }
 
 enum ErrorsNameEnum {
@@ -35,9 +37,4 @@ enum MessagesEnum {
   MIN_COUNT = 'Значение должно быть больше 0',
 }
 
-enum TokenTimeEnum {
-  ACCESS = '30m',
-  REFRESH = '30d',
-}
-
-export { ErrorsNameEnum, MessagesEnum, RoutesEnum, TextEnum, TokenTimeEnum };
+export { ErrorsNameEnum, MessagesEnum, RoutesEnum, TextEnum };

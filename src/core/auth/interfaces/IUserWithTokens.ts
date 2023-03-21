@@ -1,4 +1,4 @@
-import IUser from './IUser';
+import IUser from '@app/core/auth/interfaces/IUser';
 
 export interface IUserWithTokens extends IUser {
   readonly accessToken: string;

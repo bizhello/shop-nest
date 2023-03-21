@@ -1,9 +1,8 @@
+import TokenService from '@app/core/token/token.service';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Token, tokenSchema } from '@app/schemas/token.schema';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Token, tokenSchema } from '../../schemas/token.schema';
-import TokenService from './token.service';
 
 @Module({
   imports: [

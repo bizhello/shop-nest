@@ -1,5 +1,5 @@
-import { allowedCors } from '../common/constants';
-import { MessagesEnum } from '../common/enums';
+import { allowedCors } from '@app/common/constants';
+import { MessagesEnum } from '@app/common/enums';
 
 export default {
   credentials: true,

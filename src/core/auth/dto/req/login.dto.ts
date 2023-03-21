@@ -1,3 +1,5 @@
+import { maxLengthWord } from '@app/common/constants';
+import { IUserLogin } from '@app/core/auth/interfaces/IUserLogin';
 import {
   IsBoolean,
   IsEmail,
@@ -5,9 +7,6 @@ import {
   IsString,
   Length,
 } from 'class-validator';
-
-import { maxLengthWord } from '../../../../common/constants';
-import { IUserLogin } from '../../interfaces/IUserLogin';
 
 export default class ReqLoginDto implements IUserLogin {
   @IsNotEmpty()

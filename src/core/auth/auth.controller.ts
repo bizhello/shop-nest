@@ -1,7 +1,16 @@
+import { maxAgeRefreshToken } from '@app/common/constants';
+import { MessagesEnum, RoutesEnum, TextEnum } from '@app/common/enums';
+import AuthService from '@app/core/auth/auth.service';
+import ReqLoginDto from '@app/core/auth/dto/req/login.dto';
+import ReqRegistryDto from '@app/core/auth/dto/req/registry.dto';
+import ResLoginDto from '@app/core/auth/dto/res/login.dto';
+import ResRegistryDto from '@app/core/auth/dto/res/registry.dto';
+import TokenService from '@app/core/token/token.service';
 import {
   Body,
   Controller,
   Get,
+  HttpCode,
   HttpException,
   HttpStatus,
   Post,
@@ -9,15 +18,6 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-
-import { maxAgeRefreshToken } from '../../common/constants';
-import { MessagesEnum, RoutesEnum, TextEnum } from '../../common/enums';
-import TokenService from '../token/token.service';
-import AuthService from './auth.service';
-import ReqLoginDto from './dto/req/login.dto';
-import ReqRegistryDto from './dto/req/registry.dto';
-import ResLoginDto from './dto/res/login.dto';
-import ResRegistryDto from './dto/res/registry.dto';
 
 @Controller()
 export default class AuthController {
@@ -27,11 +27,13 @@ export default class AuthController {
   ) {}
 
   @Post(RoutesEnum.REGISTRY)
+  @HttpCode(200)
   public async register(@Body() dto: ReqRegistryDto): Promise<ResRegistryDto> {
     return this.authService.registry(dto);
   }
 
   @Post(RoutesEnum.LOGIN)
+  @HttpCode(200)
   public async login(
     @Body() dto: ReqLoginDto,
     @Res({ passthrough: true }) response: Response,
