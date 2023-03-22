@@ -1,16 +1,17 @@
 import IUploadImage from '@app/core/image/interfaces/IUploadImage';
 import MFile from '@app/core/image/mfile.class';
 import { Injectable } from '@nestjs/common';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { path } from 'app-root-path';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ensureDir, writeFile } from 'fs-extra';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { Types } from 'mongoose';
 import * as sharp from 'sharp';
 
 @Injectable()
 export default class ImageService {
-  public async uploadImage(idCard: string, file: MFile): Promise<IUploadImage> {
+  public async uploadImage(
+    idCard: Types.ObjectId,
+    file: MFile,
+  ): Promise<IUploadImage> {
     const uploadFolder = `${path}/uploads/images/${idCard}`;
     await ensureDir(uploadFolder);
     await writeFile(`${uploadFolder}/image.webp`, file.buffer);

@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import { ErrorsNameEnum, MessagesEnum } from '@app/common/enums';
 import IUser from '@app/core/auth/interfaces/IUser';
 import ChangeUserDto from '@app/core/user/dto/req/change-user.dto';
 import { TUserDocument, User } from '@app/schemas/user.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export default class UserService {
@@ -24,7 +23,7 @@ export default class UserService {
     return resUsers;
   }
 
-  public async deleteUser(id: string): Promise<{ message: string }> {
+  public async deleteUser(id: Types.ObjectId): Promise<{ message: string }> {
     const user = await this.userModel.findById(id);
 
     if (!user) {
@@ -39,7 +38,7 @@ export default class UserService {
   }
 
   public async changeUser(
-    userId: string,
+    userId: Types.ObjectId,
     changeUserDto: ChangeUserDto,
   ): Promise<IUser> {
     try {
@@ -72,7 +71,7 @@ export default class UserService {
     }
   }
 
-  public async getUserById(userId: string): Promise<IUser> {
+  public async getUserById(userId: Types.ObjectId): Promise<IUser> {
     const user = await this.userModel.findById(userId);
 
     if (!user) {

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import CoreModule from '@app/core/core.module';
 import AuthMiddleware from '@app/middlewares/AuthMiddleware';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
@@ -22,8 +21,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
   providers: [],
 })
 export default class AppModule {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-member-accessibility
-  configure(consumer: MiddlewareConsumer) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes({
       path: '*',
       method: RequestMethod.ALL,

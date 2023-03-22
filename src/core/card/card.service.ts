@@ -7,7 +7,7 @@ import {
 import { Card, TCardDocument } from '@app/schemas/card.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export default class CardService {
@@ -33,7 +33,7 @@ export default class CardService {
     return { id, title, dateFrom, dateTo, count };
   }
 
-  public async deleteCard(id: string): Promise<{ message: string }> {
+  public async deleteCard(id: Types.ObjectId): Promise<{ message: string }> {
     const card = await this.cardModel.findById(id);
     if (!card) {
       throw new HttpException(
@@ -46,7 +46,7 @@ export default class CardService {
     return { message: MessagesEnum.CARD_DELETE };
   }
 
-  public async incrementCard(id: string): Promise<{ status: string }> {
+  public async incrementCard(id: Types.ObjectId): Promise<{ status: string }> {
     const card = await this.cardModel.findById(id);
     card.count += 1;
     await card.save();
@@ -60,7 +60,7 @@ export default class CardService {
     return { status: 'Ок' };
   }
 
-  public async decrementCard(id: string): Promise<{ status: string }> {
+  public async decrementCard(id: Types.ObjectId): Promise<{ status: string }> {
     try {
       const card = await this.cardModel.findById(id);
       card.count -= 1;
@@ -81,7 +81,7 @@ export default class CardService {
   }
 
   public async changeCard(
-    userId: string,
+    userId: Types.ObjectId,
     changeCardDto: IChangeCard,
   ): Promise<ICardWithId> {
     const card = await this.cardModel.findByIdAndUpdate(userId, changeCardDto, {

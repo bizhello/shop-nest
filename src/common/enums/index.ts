@@ -35,6 +35,7 @@ enum MessagesEnum {
   CARD_DELETE = 'Карточка удалена',
   CORS = 'Not allowed by CORS',
   MIN_COUNT = 'Значение должно быть больше 0',
+  TOKEN_NOT_VALID = 'Токен не валидный',
 }
 
 export { ErrorsNameEnum, MessagesEnum, RoutesEnum, TextEnum };

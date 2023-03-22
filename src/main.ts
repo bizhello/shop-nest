@@ -1,9 +1,9 @@
 import AppModule from '@app/app.module';
+// import corsOptions from '@app/utils/corsOptiopns';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-// import corsOptions from './utils/corsOptiopns';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

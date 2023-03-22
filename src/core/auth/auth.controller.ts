@@ -39,14 +39,14 @@ export default class AuthController {
   ): Promise<ResLoginDto> {
     const { refreshToken, ...resUser } = await this.authService.login(dto);
 
-    // eslint-disable-next-line no-unused-expressions
-    dto.remember &&
+    if (dto.remember) {
       response.cookie(TextEnum.REFRESH_TOKEN, refreshToken, {
         maxAge: +process.env.MAX_AGE_REFRESH_TOKEN,
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        // httpOnly: true,
+        // secure: true,
+        // sameSite: 'none',
       });
+    }
 
     return resUser;
   }
@@ -79,9 +79,9 @@ export default class AuthController {
 
     response.cookie(TextEnum.REFRESH_TOKEN, userInfo.refreshToken, {
       maxAge: +process.env.MAX_AGE_REFRESH_TOKEN,
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      // httpOnly: true,
+      // secure: true,
+      // sameSite: 'none',
     });
 
     return response.send({

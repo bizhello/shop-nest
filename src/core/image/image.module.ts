@@ -1,7 +1,6 @@
 import ImageController from '@app/core/image/image.controller';
 import ImageService from '@app/core/image/image.service';
 import { Module } from '@nestjs/common';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { path } from 'app-root-path';
 

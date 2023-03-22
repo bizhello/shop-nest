@@ -16,12 +16,12 @@ export default class TokenService {
     refreshToken: string | undefined,
   ): Promise<IRefresh> {
     if (!refreshToken) {
-      throw new HttpException(MessagesEnum.AUTH_ERROR, HttpStatus.FORBIDDEN);
+      throw new HttpException(MessagesEnum.AUTH_ERROR, HttpStatus.UNAUTHORIZED);
     }
     const userId = this.validateRefreshToken(refreshToken);
     const tokenFromDb = await this.findRefreshToken(refreshToken);
     if (!userId || !tokenFromDb) {
-      throw new HttpException(MessagesEnum.AUTH_ERROR, HttpStatus.FORBIDDEN);
+      throw new HttpException(MessagesEnum.AUTH_ERROR, HttpStatus.UNAUTHORIZED);
     }
     const tokens = this.generateTokens(userId);
     await this.saveToken(userId, tokens.refreshToken);
@@ -49,7 +49,10 @@ export default class TokenService {
     const token = await this.tokenModel.deleteOne({ refreshToken });
 
     if (token.deletedCount === 0) {
-      throw new HttpException(MessagesEnum.EXIT_REPEAT, HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        MessagesEnum.EXIT_REPEAT,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 
@@ -67,8 +70,10 @@ export default class TokenService {
 
       return refreshToken;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('НЕТ в БАЗЕ ДАННЫХ');
+      throw new HttpException(
+        MessagesEnum.USER_NOT_FOUND,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -78,8 +83,10 @@ export default class TokenService {
 
       return userId;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('НЕ ВАЛИДНЫЙ РЕФРЕШ ТОКЕН');
+      throw new HttpException(
+        MessagesEnum.TOKEN_NOT_VALID,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -90,7 +97,7 @@ export default class TokenService {
       return userId;
     } catch (error) {
       throw new HttpException(
-        MessagesEnum.DATA_IS_NOT_CORRECT,
+        MessagesEnum.TOKEN_NOT_VALID,
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -104,7 +111,7 @@ export default class TokenService {
       expiresIn: process.env.TOKEN_TIME_ACCESS,
     });
 
-    const refreshToken = sign({ userId }, process.env.TOKEN_TIME_REFRESH, {
+    const refreshToken = sign({ userId }, process.env.JWT_REFRESH_SECRET, {
       expiresIn: process.env.TOKEN_TIME_REFRESH,
     });
 
