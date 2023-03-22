@@ -1,8 +1,8 @@
 import ValidateParamIdDto from '@app/common/dto/validate-id.dto';
 import { RoutesEnum } from '@app/common/enums';
 import ReqChangeUserDto from '@app/core/user/dto/req/change-user.dto';
-import ResGetUsersDto from '@app/core/user/dto/req/get-user.dto';
 import ResChangeUserDto from '@app/core/user/dto/res/change-user.dto';
+import ResGetUsersDto from '@app/core/user/dto/res/get-user.dto';
 import UserService from '@app/core/user/user.service';
 import AuthGuard from '@app/guards/auth.guard';
 import {
