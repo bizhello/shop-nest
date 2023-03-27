@@ -3,6 +3,7 @@ import ImageService from '@app/core/image/image.service';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { path } from 'app-root-path';
+// import { join } from 'path';
 
 @Module({
   imports: [

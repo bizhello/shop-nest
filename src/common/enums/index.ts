@@ -36,6 +36,7 @@ enum MessagesEnum {
   CORS = 'Not allowed by CORS',
   MIN_COUNT = 'Значение должно быть больше 0',
   TOKEN_NOT_VALID = 'Токен не валидный',
+  IMAGE_NOT_FOUND = 'Картинка не найдена',
 }
 
 export { ErrorsNameEnum, MessagesEnum, RoutesEnum, TextEnum };

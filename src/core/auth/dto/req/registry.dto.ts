@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export default class ReqRegistryDto implements IUserRegistry {
-  @ApiProperty()
+  @ApiProperty({ example: 'admin@mail.ru' })
   @IsNotEmpty()
   @IsString()
   @IsEmail()

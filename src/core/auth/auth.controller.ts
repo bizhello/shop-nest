@@ -71,8 +71,8 @@ export default class AuthController {
   @Get(RoutesEnum.REFRESH)
   public async refreshToken(
     @Req() request: Request,
-    @Res() response: Response,
-  ): Promise<Response<string, Record<string, string>>> {
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<{ userId: string; accessToken: string }> {
     const userInfo = await this.tokenService.refreshToken(
       request.cookies[TextEnum.REFRESH_TOKEN],
     );
@@ -84,9 +84,9 @@ export default class AuthController {
       // sameSite: 'none',
     });
 
-    return response.send({
+    return {
       userId: userInfo.userId,
       accessToken: userInfo.accessToken,
-    });
+    };
   }
 }

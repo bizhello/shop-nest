@@ -1,8 +1,9 @@
+import { MessagesEnum } from '@app/common/enums';
 import IUploadImage from '@app/core/image/interfaces/IUploadImage';
 import MFile from '@app/core/image/mfile.class';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { path } from 'app-root-path';
-import { ensureDir, writeFile } from 'fs-extra';
+import { ensureDir, remove, writeFile } from 'fs-extra';
 import { Types } from 'mongoose';
 import * as sharp from 'sharp';
 
@@ -20,7 +21,22 @@ export default class ImageService {
     return res;
   }
 
-  public async convertToWebP(file: Buffer): Promise<Buffer> {
-    return sharp(file).webp().toBuffer();
+  public async convertToWebP(buffer: Buffer): Promise<Buffer> {
+    return sharp(buffer).webp().toBuffer();
+  }
+
+  public async deleteImage(
+    cardId: Types.ObjectId,
+  ): Promise<{ cardId: Types.ObjectId }> {
+    try {
+      await remove(`${path}/uploads/images/${cardId}`);
+    } catch (err) {
+      throw new HttpException(
+        MessagesEnum.IMAGE_NOT_FOUND,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    return { cardId };
   }
 }
