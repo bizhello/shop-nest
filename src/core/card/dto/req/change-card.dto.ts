@@ -13,11 +13,11 @@ export default class ReqChangeCardDto {
   public readonly title?: string;
 
   @IsOptional()
-  @IsDateString()
+  @IsDateString({}, { each: true })
   public readonly dateFrom?: Date;
 
   @IsOptional()
-  @IsDateString()
+  @IsDateString({}, { each: true })
   public readonly dateTo?: Date;
 
   @IsOptional()

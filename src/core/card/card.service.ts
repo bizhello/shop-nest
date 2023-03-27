@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+import { ErrorsNameEnum, MessagesEnum } from '@app/common/enums';
+import {
+  ICard,
+  ICardWithId,
+  IChangeCard,
+} from '@app/core/card/interfaces/ICard';
+import { Card, TCardDocument } from '@app/schemas/card.schema';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-
-import CardEnum from '../../common/enums/card';
-import { Card, TCardDocument } from '../../schemas/card.schema';
-import { ICard, ICardWithId, IChangeCard } from './interfaces/ICard';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export default class CardService {
@@ -16,9 +18,9 @@ export default class CardService {
   public async getCards(): Promise<ICardWithId[]> {
     const cards = await this.cardModel.find();
     const resCards = cards.map((card) => {
-      const { _id, title, dateFrom, dateTo, count } = card;
+      const { id, title, dateFrom, dateTo, count } = card;
 
-      return { id: _id, title, dateFrom, dateTo, count };
+      return { id, title, dateFrom, dateTo, count };
     });
 
     return resCards;
@@ -26,41 +28,75 @@ export default class CardService {
 
   public async createCard(createCardDto: ICard): Promise<ICardWithId> {
     const card = await this.cardModel.create(createCardDto);
-    const { _id, title, dateFrom, dateTo, count } = card;
+    const { id, title, dateFrom, dateTo, count } = card;
 
-    return { id: _id, title, dateFrom, dateTo, count };
+    return { id, title, dateFrom, dateTo, count };
   }
 
-  public async deleteCard(id: string): Promise<{ message: string }> {
+  public async deleteCard(id: Types.ObjectId): Promise<{ message: string }> {
     const card = await this.cardModel.findById(id);
     if (!card) {
       throw new HttpException(
-        CardEnum.ERROR_MESSAGE_CARD_NOT_FOUND,
+        MessagesEnum.CARD_NOT_FOUND,
         HttpStatus.NOT_FOUND,
       );
     }
     await this.cardModel.deleteOne({ _id: id });
 
-    return { message: CardEnum.MESSAGE_CARD_DELETE };
+    return { message: MessagesEnum.CARD_DELETE };
+  }
+
+  public async incrementCard(id: Types.ObjectId): Promise<{ status: string }> {
+    const card = await this.cardModel.findById(id);
+    card.count += 1;
+    await card.save();
+    if (!card) {
+      throw new HttpException(
+        MessagesEnum.CARD_NOT_FOUND,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return { status: 'Ок' };
+  }
+
+  public async decrementCard(id: Types.ObjectId): Promise<{ status: string }> {
+    try {
+      const card = await this.cardModel.findById(id);
+      card.count -= 1;
+      await card.save();
+      if (!card) {
+        throw new HttpException(
+          MessagesEnum.CARD_NOT_FOUND,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return { status: 'Ок' };
+    } catch (error) {
+      if (error.name === ErrorsNameEnum.VALIDATION) {
+        throw new HttpException(MessagesEnum.MIN_COUNT, HttpStatus.CONFLICT);
+      }
+    }
   }
 
   public async changeCard(
-    id: string,
+    userId: Types.ObjectId,
     changeCardDto: IChangeCard,
   ): Promise<ICardWithId> {
-    const card = await this.cardModel.findByIdAndUpdate(id, changeCardDto, {
+    const card = await this.cardModel.findByIdAndUpdate(userId, changeCardDto, {
       new: true,
       runValidators: true,
     });
 
     if (!card) {
       throw new HttpException(
-        CardEnum.ERROR_MESSAGE_CARD_NOT_FOUND,
+        MessagesEnum.CARD_NOT_FOUND,
         HttpStatus.NOT_FOUND,
       );
     }
-    const { _id, title, dateFrom, dateTo, count } = card;
+    const { id, title, dateFrom, dateTo, count } = card;
 
-    return { id: _id, title, dateFrom, dateTo, count };
+    return { id, title, dateFrom, dateTo, count };
   }
 }

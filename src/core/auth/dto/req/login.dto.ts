@@ -1,7 +1,12 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
-
-import { IUserLogin } from '../../interfaces/IUserLogin';
-import { maxLength } from '../../../../common/constans/maxLengthUser';
+import { maxLengthWord } from '@app/common/constants';
+import { IUserLogin } from '@app/core/auth/interfaces/IUserLogin';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export default class ReqLoginDto implements IUserLogin {
   @IsNotEmpty()
@@ -11,6 +16,9 @@ export default class ReqLoginDto implements IUserLogin {
 
   @IsNotEmpty()
   @IsString()
-  @Length(4, maxLength)
+  @Length(4, maxLengthWord)
   public readonly password: string;
+
+  @IsBoolean()
+  public readonly remember?: boolean;
 }

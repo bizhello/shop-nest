@@ -1,6 +1,5 @@
+import IUser from '@app/core/auth/interfaces/IUser';
 import { Types } from 'mongoose';
-
-import IUser from '../../../auth/interfaces/IUser';
 
 export default class ResGetUsersDto implements IUser {
   public readonly id: Types.ObjectId;

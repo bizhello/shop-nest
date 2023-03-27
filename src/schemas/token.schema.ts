@@ -1,11 +1,10 @@
+import { TextEnum } from '@app/common/enums';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-import UserEnum from '../common/enums/user';
-
 @Schema()
-export default class Token {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: UserEnum.USER })
+export class Token {
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: TextEnum.USER })
   public userId: string;
 
   @Prop({

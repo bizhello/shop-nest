@@ -1,12 +1,12 @@
+import AuthModule from '@app/core/auth/auth.module';
+import CardModule from '@app/core/card/card.module';
+import ImageModule from '@app/core/image/image.module';
+import TokenModule from '@app/core/token/token.module';
+import UserModule from '@app/core/user/user.module';
 import { Module } from '@nestjs/common';
 
-import AuthModule from './auth/auth.module';
-import CardModule from './card/card.module';
-import TokenModule from './token/token.module';
-import UserModule from './user/user.module';
-
 @Module({
-  imports: [AuthModule, CardModule, TokenModule, UserModule],
-  exports: [AuthModule, CardModule, TokenModule, UserModule],
+  imports: [AuthModule, CardModule, TokenModule, UserModule, ImageModule],
+  exports: [AuthModule, CardModule, TokenModule, UserModule, ImageModule],
 })
 export default class CoreModule {}
